@@ -96,12 +96,24 @@ tie.directive('learnerView', [function() {
               <h3 class="tie-question-title">{{title}}</h3>
               <div class="tie-previous-instructions">
                 <div ng-repeat="previousInstruction in previousInstructions track by $index">
-                  <p ng-repeat="paragraph in previousInstruction track by $index">{{paragraph}}</p>
+                  <div ng-repeat="instruction in previousInstruction track by $index">
+                    <p ng-if="instruction.type == 'text'">{{instruction.content}}</p>
+                    <div ng-if="instruction.type == 'example'">
+                      Example: <pre class="tie-question-example">{{instruction.content}}</pre>
+                    </div>  
+                    <pre class="tie-question-code" ng-if="instruction.type == 'code'">{{instruction.content}}</pre>
+                  </div>
                   <hr>
                 </div>
               </div>
               <div class="tie-instructions">
-                <p ng-repeat="paragraph in instructions">{{paragraph}}</p>
+                <div ng-repeat="instruction in instructions">
+                  <p ng-if="instruction.type == 'text'">{{instruction.content}}</p>
+                  <div ng-if="instruction.type == 'example'">
+                    Example: <pre class="tie-question-example">{{instruction.content}}</pre>
+                  </div>  
+                  <pre class="tie-question-code" ng-if="instruction.type == 'code'">{{instruction.content}}</pre>
+                </div>
               </div>
             </div>
           </div>
@@ -277,6 +289,28 @@ tie.directive('learnerView', [function() {
         }
         .tie-previous-instructions {
           opacity: 0.5;
+        }
+        .tie-question-code {
+          background: rgb(242, 242, 242);
+          font-family: monospace;
+          padding: 10px;
+          border: 1px solid #ccc;
+          font-size: 13px;
+          white-space: pre-wrap;
+          white-space: -moz-pre-wrap;
+          white-space: -pre-wrap;
+          white-space: -o-pre-wrap;
+          word-wrap: break-word;  
+        }
+        .tie-question-example {
+          background: rgb(242, 242, 242);
+          padding: 10px;
+          border: 1px solid #ccc;
+          white-space: pre-wrap;
+          white-space: -moz-pre-wrap;
+          white-space: -pre-wrap;
+          white-space: -o-pre-wrap;
+          word-wrap: break-word;  
         }
         .tie-question-title {
           color: rgb(66, 133, 244);
